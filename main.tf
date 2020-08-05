@@ -3,12 +3,12 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("~/.config/gcloud/key.json")
+  # credentials = file("~/.config/gcloud/key.json")
   version     = "~> 3.32"
 }
 
 provider "google-beta" {
-  credentials = file("~/.config/gcloud/key.json")
+  # credentials = file("~/.config/gcloud/key.json")
   version     = "~> 3.32"
 }
 
