@@ -131,11 +131,6 @@ resource "google_sql_database_instance" "read_replica" {
     location_preference {
       zone = "europe-west4-b"
     }
-
-    backup_configuration {
-      binary_log_enabled = false
-      enabled            = true
-    }
   }
 }
 
