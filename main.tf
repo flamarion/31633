@@ -4,12 +4,12 @@ terraform {
 
 provider "google" {
   # credentials = file("~/.config/gcloud/key.json")
-  version     = "~> 3.32"
+  version = "~> 3.32"
 }
 
 provider "google-beta" {
   # credentials = file("~/.config/gcloud/key.json")
-  version     = "~> 3.32"
+  version = "~> 3.32"
 }
 
 resource "random_id" "name" {
@@ -25,7 +25,7 @@ resource "random_id" "name" {
 
 resource "google_sql_database_instance" "master" {
 
-  provider         = google-beta
+  provider = google-beta
   # name             = "master-${random_id.name.hex}"
   project          = "flamarion"
   region           = "europe-west4"
@@ -158,3 +158,11 @@ output "master" {
 # output "read_reaplica" {
 #   value = google_sql_database_instance.read_replica
 # }
+
+output "db" {
+  value = google_sql_database.default
+}
+
+output "db_user" {
+  value = google_sql_user.default
+}
