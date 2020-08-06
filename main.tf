@@ -142,7 +142,7 @@ resource "google_sql_user" "default" {
 data "template_file" "complete" {
   depends_on = [
     google_sql_database_instance.master,
-    google_sql_database_instance.read_replica,
+    # google_sql_database_instance.read_replica,
     google_sql_database.default,
     google_sql_user.default,
   ]
