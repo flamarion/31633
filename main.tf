@@ -26,7 +26,7 @@ resource "random_id" "name" {
 resource "google_sql_database_instance" "master" {
 
   provider         = google-beta
-  name             = "master-${random_id.name.hex}"
+  # name             = "master-${random_id.name.hex}"
   project          = "flamarion"
   region           = "europe-west4"
   database_version = "POSTGRES_11"
@@ -89,50 +89,50 @@ resource "google_sql_user" "default" {
 # CREATE THE READ REPLICAS
 # ------------------------------------------------------------------------------
 
-resource "google_sql_database_instance" "read_replica" {
+# resource "google_sql_database_instance" "read_replica" {
 
-  depends_on = [
-    google_sql_database_instance.master,
-    google_sql_database.default,
-    google_sql_user.default,
-  ]
+#   depends_on = [
+#     google_sql_database_instance.master,
+#     google_sql_database.default,
+#     google_sql_user.default,
+#   ]
 
-  provider         = google-beta
-  name             = "replica-${random_id.name.hex}"
-  project          = "flamarion"
-  region           = "europe-west4"
-  database_version = "POSTGRES_11"
+#   provider         = google-beta
+#   # name             = "replica-${random_id.name.hex}"
+#   project          = "flamarion"
+#   region           = "europe-west4"
+#   database_version = "POSTGRES_11"
 
-  # The name of the instance that will act as the master in the replication setup.
-  master_instance_name = google_sql_database_instance.master.name
+#   # The name of the instance that will act as the master in the replication setup.
+#   master_instance_name = google_sql_database_instance.master.name
 
-  replica_configuration {
-    # Specifies that the replica is not the failover target.
-    failover_target = false
-  }
+#   replica_configuration {
+#     # Specifies that the replica is not the failover target.
+#     failover_target = false
+#   }
 
-  settings {
-    tier              = "db-f1-micro"
-    activation_policy = "ALWAYS"
-    availability_type = "REGIONAL"
-    disk_autoresize   = true
-    disk_size         = 10
-    disk_type         = "PD_SSD"
-    pricing_plan      = "PER_USE"
+#   settings {
+#     tier              = "db-f1-micro"
+#     activation_policy = "ALWAYS"
+#     availability_type = "REGIONAL"
+#     disk_autoresize   = true
+#     disk_size         = 10
+#     disk_type         = "PD_SSD"
+#     pricing_plan      = "PER_USE"
 
-    ip_configuration {
-      ipv4_enabled = true
-      authorized_networks {
-        name  = "all"
-        value = "0.0.0.0/0"
-      }
-    }
+#     ip_configuration {
+#       ipv4_enabled = true
+#       authorized_networks {
+#         name  = "all"
+#         value = "0.0.0.0/0"
+#       }
+#     }
 
-    location_preference {
-      zone = "europe-west4-b"
-    }
-  }
-}
+#     location_preference {
+#       zone = "europe-west4-b"
+#     }
+#   }
+# }
 
 
 # ------------------------------------------------------------------------------
@@ -155,6 +155,6 @@ output "master" {
   value = google_sql_database_instance.master
 }
 
-output "read_reaplica" {
-  value = google_sql_database_instance.read_replica
-}
+# output "read_reaplica" {
+#   value = google_sql_database_instance.read_replica
+# }
